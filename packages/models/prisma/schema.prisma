@@ -15,15 +15,18 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  firstname     String
-  lastname      String
-  nickname      String
-  email         String   @unique
+  firstname String
+  lastname  String
+  nickname  String
+  email     String @unique
+  password  String
+  refresh   String
+
   pressKeywords String[] @default([])
 
-  default_currency         Currency                 @relation(fields: [currencyId], references: [id], onDelete: NoAction)
+  currency                 Currency?                @relation(references: [id], onDelete: NoAction, fields: [currencyId])
+  currencyId               Int?
   followedCryptoCurrencies UserFollowedCurrencies[]
-  currencyId               Int
 }
 
 model Currency {
@@ -50,4 +53,9 @@ model UserFollowedCurrencies {
   currency   Currency @relation(fields: [currencyId], references: [id], onDelete: Cascade)
   userId     Int
   currencyId Int
+}
+
+enum App {
+  FRONT
+  BO
 }
