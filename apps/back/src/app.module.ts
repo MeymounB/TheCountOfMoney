@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PrismaCrudModule } from 'nestjs-prisma-crud';
 import { PrismaService } from '@timeismoney/models';
 import { UserModule } from './modules/user/user.module';
-import { CurrencyModule } from './modules/currency/currency.module';
+import { CryptoModule } from './modules/crypto/crypto.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -15,7 +15,7 @@ import { ConfigModule } from '@nestjs/config';
       prismaService: PrismaService,
     }),
     UserModule,
-    CurrencyModule,
+    CryptoModule,
     AuthModule,
   ],
 })
