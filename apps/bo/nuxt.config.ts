@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
-  modules: ["@pinia/nuxt"],
+  modules: ["@vueuse/nuxt", "@pinia/nuxt"],
 
   css: ["@/assets/scss/main.scss"],
 
@@ -11,6 +11,17 @@ export default defineNuxtConfig({
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+    },
+  },
+
+  typescript: {
+    strict: true,
+    shim: false,
+  },
+
+  runtimeConfig: {
+    public: {
+      BACK_URL: "",
     },
   },
 });

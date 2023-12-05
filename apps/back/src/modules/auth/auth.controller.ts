@@ -3,6 +3,8 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   Req,
   Res,
@@ -13,12 +15,11 @@ import {
 import { AuthService } from './auth.service';
 import { RequestUser } from '../../decorators/request-user.decorator';
 import { LocalGuard } from '../../guards/passport/local.guard';
-import { logInDto, signUpDto } from '@timeismoney/dto';
+import { LoginDto, signUpDto } from '@timeismoney/dto';
 import { Request, Response } from 'express';
 import { UserInterceptor } from '../../interceptors/user.interceptor';
 import { IRequestUser } from '../../types/passport/request-user';
 import { RefreshGuard } from '../../guards/passport/jwt-rt.guard';
-import { AccessGuard } from '../../guards/passport/jwt-at.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -32,10 +33,11 @@ export class AuthController {
   }
 
   @UseGuards(LocalGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('/login')
   async login(
     @RequestUser() user: IRequestUser,
-    @Body() body: logInDto,
+    @Body() body: LoginDto,
     @Res({ passthrough: true }) response: Response,
   ) {
     const tokens = await this.authService.login(user.userId, body.app);
@@ -82,14 +84,13 @@ export class AuthController {
     return user;
   }
 
-  @UseGuards(AccessGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Post('/logout')
+  @Post('/logout/:id')
   async logout(
-    @RequestUser() user: IRequestUser,
+    @Param('id', ParseIntPipe) id: number,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.removeUserRefresh(user.userId);
+    await this.authService.removeUserRefresh(id);
 
     response.clearCookie('access_token');
     response.clearCookie('refresh_token');
