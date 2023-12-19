@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar bg-base-100">
+  <header class="navbar">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -20,7 +20,7 @@
         </label>
         <ul
           tabindex="0"
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52"
         >
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><NuxtLink to="/cryptocurrencies">Crypto</NuxtLink></li>
@@ -28,16 +28,36 @@
         </ul>
       </div>
       <NuxtLink to="/" class="btn btn-ghost text-xl hidden lg:flex">
-        <img src="@/assets/img/logo.png" class="max-w-[40px]" />
+        <img
+          v-if="theme === 'light'"
+          src="@/assets/img/logo.png"
+          class="max-w-[40px]"
+        />
+        <img
+          v-else
+          src="@/assets/img/logodark.png"
+          alt="Logo"
+          class="max-w-[40px]"
+        />
         <p>The Count Of Money</p>
       </NuxtLink>
     </div>
     <NuxtLink to="/" class="btn btn-ghost text-xl flex lg:hidden">
-      <img src="@/assets/img/logo.png" class="max-w-[40px]" />
+      <img
+        v-if="theme === 'light'"
+        src="@/assets/img/logo.png"
+        class="max-w-[40px]"
+      />
+      <img
+        v-else
+        src="@/assets/img/logodark.png"
+        alt="Logo"
+        class="max-w-[40px]"
+      />
     </NuxtLink>
     <div class="navbar-end">
       <div class="hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
+        <ul class="menu menu-horizontal px-1 flex gap-1">
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><NuxtLink to="/cryptocurrencies">Cryptos</NuxtLink></li>
           <li><NuxtLink to="/news">News</NuxtLink></li>
@@ -79,7 +99,7 @@
         </ul>
         <div class="divider lg:divider-horizontal"></div>
       </div>
-      <div class="mx-2">
+      <div class="mx-2 flex gap-2">
         <NuxtLink
           v-if="!session.isLoggedIn"
           to="/login"

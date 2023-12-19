@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="flex gap-20 flex-col py-20 px-6 lg:px-12 bg-secondary text-secondary-content"
-  >
+  <section class="flex gap-20 flex-col py-20 px-6 lg:px-12">
     <div class="text-center">
       <h2 class="text-2xl md:text-2xl lg:text-2xl xl:text-3xl font-bold mb-3">
         Tendances et Analyses en Temps Réel des Cryptomonnaies

@@ -1,12 +1,12 @@
 <template>
   <section
-    class="bg-primary text-primary-content flex flex-col items-center py-8 md:py-16 lg:py-24 xl:py-32 gap-y-8 md:gap-y-16 lg:gap-y-24"
+    class="px-6 lg:px-12 flex flex-col items-center py-8 md:py-16 lg:py-24 xl:py-32 gap-y-8 md:gap-y-16 lg:gap-y-24"
   >
     <article
       class="w-full flex flex-col-reverse md:flex-row-reverse items-center justify-evenly gap-5"
     >
       <div
-        class="flex flex-col w-full md:w-[500px] gap-7 flex-col justify-between items-center md:items-start text-center md:text-left"
+        class="flex flex-col w-full md:w-[500px] gap-7 justify-between items-center md:items-start text-center md:text-left"
       >
         <h3
           class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lg:mb-2"
@@ -19,11 +19,11 @@
           tendances et développements pertinents, directement depuis votre
           tableau de bord.
         </p>
-        <button class="btn btn-secondary py-2 px-4 rounded-md">
-          Commencer
-        </button>
+        <button class="btn btn-primary py-2 px-4 rounded-md">Commencer</button>
       </div>
-      <div class="w-full sm:w-[500px] border-solid border-black border-[4px]">
+      <div
+        class="w-full sm:w-[500px] card border-solid border-base-content p-5 border-[4px]"
+      >
         <img
           src="@/assets/img/cryptocurrencies.png"
           alt="Cryptocurrencies"
@@ -35,7 +35,7 @@
       class="w-full flex flex-col-reverse md:flex-row items-center justify-evenly gap-5"
     >
       <div
-        class="flex flex-col w-full md:w-[500px] gap-7 flex-col justify-between items-center md:items-start text-center md:text-left"
+        class="flex flex-col w-full md:w-[500px] gap-7 justify-between items-center md:items-start text-center md:text-left"
       >
         <h3
           class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lg:mb-2"
@@ -51,7 +51,9 @@
           Explorer plus
         </button>
       </div>
-      <div class="w-full sm:w-[500px] border-solid border-black border-[4px]">
+      <div
+        class="w-full sm:w-[500px] card border-solid border-base-content p-5 border-[4px]"
+      >
         <img
           src="@/assets/img/news.png"
           alt="News"

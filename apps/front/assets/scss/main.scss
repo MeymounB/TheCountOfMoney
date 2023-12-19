@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 @layer utilities {
-  @variants responsive {
+  @layer responsive {
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -26,6 +26,24 @@ body {
 #__nuxt {
   height: 100%;
   box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #191919;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 .layout-container {
