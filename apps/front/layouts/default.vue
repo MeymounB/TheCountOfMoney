@@ -6,7 +6,7 @@
     </main>
   </div>
 </template>
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import type { CredentialResponse } from "vue3-google-signin";
 
 const session = useSessionStore();
@@ -29,5 +29,5 @@ if (!session.isLoggedIn) {
     promptParentId: "googleTap",
   });
 }
-</script>
+</script> -->
 <style lang="scss" scoped></style>
