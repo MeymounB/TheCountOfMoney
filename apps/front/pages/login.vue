@@ -86,7 +86,6 @@ const email = ref("");
 const password = ref("");
 
 const sessionStore = useSessionStore();
-const toast = useToast();
 const login = async () => {
   const response = await sessionStore.login({
     email: email.value,
@@ -107,9 +106,8 @@ const handleLoginSuccess = async (response: CredentialResponse) => {
   const res = await sessionStore.loginWithGoogle(credential);
 
   if (!res) {
-    return toast.add({ title: "Authentification went wrong!", color: "red" });
+    return alert("Authentification went wrong!");
   }
-  toast.add({ title: "Sucessfully Authenticated" });
   return navigateTo("/cryptocurrencies");
 };
 

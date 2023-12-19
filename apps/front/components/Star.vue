@@ -44,13 +44,4 @@ const props = defineProps({
 
 const isToggled = ref(false);
 const session = useSessionStore();
-const toast = useToast();
-
-watch(isToggled, (newValue) => {
-  if (newValue) {
-    toast.add({ title: `Added ${props.crypto} to favourites!` });
-  } else {
-    toast.add({ title: `Removed ${props.crypto} from favourites!` });
-  }
-});
 </script>
