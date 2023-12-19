@@ -129,7 +129,7 @@
 
   <div
     v-if="!isActive"
-    class="px-6 lg:px-12 flex flex-col lg:flex-row lg:gap-[50px] h-full"
+    class="px-6 lg:px-12 flex flex-col tableau lg:gap-[50px] h-full"
   >
     <section class="profil my-10 lg:px-5">
       <table
@@ -224,10 +224,10 @@
     </section>
 
     <hr
-      class="border border-solid border-gray-300 h-full align-middle hidden lg:inline-block"
+      class="border my-10 border-solid border-gray-300 h-auto align-middle hidden ligne"
     />
 
-    <section class="flex w-full items-center justify-center lg:justify-start">
+    <section class="my-10 flex w-full justify-center cryptosfav">
       <!-- <p>Module crypto favorite</p> -->
       <div class="overflow-x-auto border rounded-xl border-base-300">
         <UITable id="table" class="table" :table-data="dataTable">
@@ -258,7 +258,7 @@
             </span>
           </template>
           <template #last24hCandle="data">
-            <span
+            <!-- <span
               :class="
                 getClass(
                   data.data.price && data.data.price.EUR
@@ -273,10 +273,10 @@
                     "%"
                   : "N/A"
               }}
-            </span>
+            </span> -->
           </template>
           <template #hourCandle="data">
-            <span
+            <!-- <span
               :class="
                 getClass(
                   data.data.price && data.data.price.EUR
@@ -291,7 +291,7 @@
                     "%"
                   : "N/A"
               }}
-            </span>
+            </span> -->
           </template>
           <template #market_cap="data">
             {{
@@ -310,6 +310,12 @@
         </UITable>
       </div>
     </section>
+  </div>
+
+  <div class="w-full text-center">
+    <p class="pb-10">
+      l'overflow est dû au bouton switch, ne pas toucher les éléments
+    </p>
   </div>
 </template>
 
@@ -388,42 +394,62 @@ const dataTable = ref<UIDataTable<any>>({
   data: [],
 });
 
-const getClass = (value) => {
-  if (typeof value === "number") {
-    return value < 0 ? "text-red-500 font-bold" : "text-green-500 font-bold";
-  } else if (typeof value === "string") {
-    return value.startsWith("-")
-      ? "text-red-500 font-bold"
-      : "text-green-500 font-bold";
-  }
-  return "";
-};
+// const getClass = (value) => {
+//   if (typeof value === "number") {
+//     return value < 0 ? "text-red-500 font-bold" : "text-green-500 font-bold";
+//   } else if (typeof value === "string") {
+//     return value.startsWith("-")
+//       ? "text-red-500 font-bold"
+//       : "text-green-500 font-bold";
+//   }
+//   return "";
+// };
 
-const fetchCryptoData = async () => {
-  const response = await useFetchAPI<any[]>("GET", "/cryptos/");
-  if (response.ok) {
-    const symbols = response.data.data.map((crypto) => crypto.symbol).join(",");
-    const pricesResponse = await useFetchAPI<any>(
-      "GET",
-      `/cryptos/prices/?symbols=${symbols}`
-    );
-    if (pricesResponse.ok) {
-      const pricesData = pricesResponse.data;
-      const combinedData = response.data.data.map((crypto) => {
-        return {
-          ...crypto,
-          price: pricesData[crypto.symbol],
-        };
-      });
-      dataTable.value.data = combinedData;
-      console.log(dataTable.value.data);
-    }
-  } else {
-    alert("Failed fetching data");
-  }
-};
+// const fetchCryptoData = async () => {
+//   const response = await useFetchAPI<any[]>("GET", "/cryptos/");
+//   if (response.ok) {
+//     const symbols = response.data.data.map((crypto) => crypto.symbol).join(",");
+//     const pricesResponse = await useFetchAPI<any>(
+//       "GET",
+//       `/cryptos/prices/?symbols=${symbols}`
+//     );
+//     if (pricesResponse.ok) {
+//       const pricesData = pricesResponse.data;
+//       const combinedData = response.data.data.map((crypto) => {
+//         return {
+//           ...crypto,
+//           price: pricesData[crypto.symbol],
+//         };
+//       });
+//       dataTable.value.data = combinedData;
+//       console.log(dataTable.value.data);
+//     }
+//   } else {
+//     alert("Failed fetching data");
+//   }
+// };
 
-onMounted(async () => {
-  fetchCryptoData();
-});
+// onMounted(async () => {
+//   fetchCryptoData();
+// });
 </script>
+
+<style scoped>
+.tableau {
+  @media screen and (min-width: 1174px) {
+    flex-direction: row;
+  }
+}
+
+.ligne {
+  @media screen and (min-width: 1174px) {
+    display: inline-block;
+  }
+}
+
+.cryptosfav {
+  @media screen and (min-width: 1174px) {
+    justify-content: start;
+  }
+}
+</style>
