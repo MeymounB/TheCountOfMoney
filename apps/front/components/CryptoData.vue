@@ -1,9 +1,9 @@
 <template>
-  <div class="absolute top-0 right-0 p-2 text-xl">
-    <Star :crypto="cryptoData.coinName" />
+  <div v-if="cryptoData" class="absolute top-0 right-4 p-2 text-xl">
+    <Star />
   </div>
   <!-- Content for left sidebar -->
-  <div class="mb-6 mx-4">
+  <div v-if="cryptoData.coinName && cryptoData2.length !== 0" class="mb-6 mx-4">
     <div class="flex items-center mt-4">
       <img
         :src="cryptoData.imageUrl"
@@ -13,7 +13,7 @@
       <h2 class="text-3xl font-semibold">{{ cryptoData.coinName }}</h2>
       <h2 class="text-lg ml-2">{{ cryptoData.symbol }}</h2>
     </div>
-    <div class="text-5xl flex items-center font-bold">
+    <div class="text-4xl flex items-center font-bold">
       {{ formatNumberWithSpaces(Number(cryptoData2.currentPrice).toFixed(2)) }}
       €
       <div
@@ -24,22 +24,33 @@
         }"
       >
         {{
-          cryptoData2.hourCandle?.changePercent
-            ? Number(cryptoData2.hourCandle.changePercent).toFixed(3) + "% (1h)"
-            : "Loading..."
+          Number(cryptoData2.hourCandle?.changePercent).toFixed(3) + "% (1h)"
         }}
       </div>
     </div>
   </div>
 
-  <div class="flex justify-between items-center mb-3 mx-4">
+  <div v-else class="h-32 w-auto mb-6 mx-4 skeleton"></div>
+
+  <div
+    v-if="cryptoData2.marketCap"
+    class="flex justify-between items-center mb-3 mx-4"
+  >
     <span>Market Cap</span>
     <span class="font-semibold"
       >{{ formatLargeNumber(Number(cryptoData2.marketCap)) }} €
     </span>
   </div>
 
-  <div class="flex justify-between items-center mb-3 mx-4">
+  <div
+    v-else
+    class="flex w-auto h-10 justify-between items-center mb-3 mx-4 skeleton"
+  ></div>
+
+  <div
+    v-if="cryptoData2.last24hCandle"
+    class="flex justify-between items-center mb-3 mx-4"
+  >
     <span>Volume (24h)</span>
     <span class="font-semibold"
       >{{
@@ -49,6 +60,11 @@
       €</span
     >
   </div>
+
+  <div
+    v-else
+    class="flex w-auto h-10 justify-between items-center mb-3 mx-4 skeleton"
+  ></div>
 
   <!-- <div class="flex justify-between items-center mb-3 mx-4">
     <span>Offre Totale</span>
@@ -67,7 +83,10 @@
   </div>
 
   <div class="mb-6 mt-6">
-    <div class="flex justify-between items-center mb-3 mx-4">
+    <div
+      v-if="cryptoData.website || cryptoData.github || cryptoData.whitepaper"
+      class="flex justify-between items-center mb-3 mx-4"
+    >
       <span class="font-semibold">Official Links</span>
     </div>
 
@@ -94,6 +113,10 @@
         >White paper</a
       >
     </div>
+    <div
+      v-if="cryptoData.length == 0"
+      class="flex w-auto h-10 items-center mb-3 mx-4 skeleton"
+    ></div>
   </div>
   <!-- <div class="mb-6">
     <div class="flex justify-between items-center mb-3 mx-4">
@@ -111,12 +134,13 @@
 import { ref, onMounted } from "vue";
 import { useFetchAPI } from "../composables/fetch.ts";
 import { defineProps } from "vue";
+
 const route = useRoute();
 const isToggled = ref(false);
 const cryptoData2 = ref([]);
 const props = defineProps({
   cryptoData: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
