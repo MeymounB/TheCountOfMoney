@@ -1,7 +1,5 @@
-import { LoginDto } from "@timeismoney/dto";
-
 export function useLogin() {
-  return async (credentials: LoginDto) => {
+  return async (credentials: any) => {
     return await useFetchAPI<any>("POST", "auth/login", credentials);
   };
 }

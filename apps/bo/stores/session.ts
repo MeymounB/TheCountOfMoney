@@ -1,8 +1,7 @@
 import { useLocalStorage, StorageSerializers } from "@vueuse/core";
-import { LoginDto, UserEntity } from "@timeismoney/dto";
 
 export const useSessionStore = defineStore("session", () => {
-  const user = useLocalStorage<UserEntity | null>("user", null, {
+  const user = useLocalStorage<any | null>("user", null, {
     serializer: StorageSerializers.object,
   });
 
@@ -19,7 +18,7 @@ export const useSessionStore = defineStore("session", () => {
     user.value = response.data;
   }
 
-  async function login(credentials: LoginDto) {
+  async function login(credentials: any) {
     const response = await useLogin()(credentials);
 
     if (!response.ok) {
