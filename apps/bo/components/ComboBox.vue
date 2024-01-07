@@ -23,10 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import type { CoinInformationsShort } from "@timeismoney/coinapi/dist/types";
-
 const emit = defineEmits(["update"]);
-const cryptoCurrenciesAPI = ref<CoinInformationsShort[]>([]);
+const cryptoCurrenciesAPI = ref<any[]>([]);
 
 const getAllCurrencies = useGetAllAPICurrencies();
 const registerCryptoCurrency = useRegisterCryptoCurrency();

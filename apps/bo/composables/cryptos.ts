@@ -1,5 +1,3 @@
-import type { CoinInformationsShort } from "@timeismoney/coinapi/dist/types";
-
 export function useGetAllCryptos() {
   return function () {
     return useFetchAPI<{
@@ -10,10 +8,7 @@ export function useGetAllCryptos() {
 
 export function useGetAllAPICurrencies() {
   return function () {
-    return useFetchAPI<{ pages: CoinInformationsShort[] }>(
-      "GET",
-      "cryptos/api-currencies",
-    );
+    return useFetchAPI<{ pages: any[] }>("GET", "cryptos/api-currencies");
   };
 }
 
