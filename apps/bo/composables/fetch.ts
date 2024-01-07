@@ -7,7 +7,7 @@ const runtimeConfig = useRuntimeConfig();
 const ENDPOINT = `${runtimeConfig.public.BACK_URL}`;
 
 export async function useFetchAPI<T>(
-  method: "GET" | "POST" | "PUT" | "DELETE",
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
   url: string,
   body?: any,
 ): Promise<Ok<T> | Err> {
@@ -27,7 +27,7 @@ export async function useFetchAPI<T>(
     if (session.isRefreshing) {
       return { ok: false, status: response.status };
     }
-    if (response.status === 401) {
+    if (response.status === 401 && url.endsWith("/me")) {
       const success = await session.refreshSession();
 
       if (!success) {
