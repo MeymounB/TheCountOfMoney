@@ -59,6 +59,7 @@ export const useSessionStore = defineStore("session", () => {
 
   function localLogout() {
     user.value = null;
+    return navigateTo("/");
   }
 
   setTimeout(() => {
