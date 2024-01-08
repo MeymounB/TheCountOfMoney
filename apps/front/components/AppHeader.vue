@@ -42,23 +42,12 @@
           <li><NuxtLink to="/cryptocurrencies">Cryptos</NuxtLink></li>
           <li><NuxtLink to="/news">News</NuxtLink></li>
           <!-- CURRENCY SELECTOR IN HARD CODE TO BE IMPLEMENTED -->
-          <li>
+          <li  v-if="session.isLoggedIn">
             <a class="text-xs" @click="toggleCurrencySelector"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              Euro
+              > 
+                 <div class="flex items-center justify-center w-4 h-4 text-xs rounded-full border border-current">
+                    {{ selectedCurrencySymbol }}
+                 </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -86,14 +75,18 @@
           class="btn btn-sm btn-primary"
           >Login</NuxtLink
         >
-        {{ session.user?.nickname }}
+          <NuxtLink
+          v-if="session.isLoggedIn"
+          to="/user"
+          class="btn btn-sm btn-secondary"
+          >{{ session.user?.nickname }}</NuxtLink></div>
         <Logout class="ml-2" />
-      </div>
     </div>
   </header>
   <currencySelector
     v-if="isCurrencySelectorVisible"
     @close="toggleCurrencySelector"
+    @selectedCurrency="updateSelectedCurrency"
   />
 </template>
 
@@ -101,10 +94,13 @@
 import { ref } from "vue";
 import { useSessionStore } from "~/stores/session";
 const session = useSessionStore();
-
+const selectedCurrencySymbol = ref(localStorage.getItem('fiatSymbol') || 'Euro');
 const isCurrencySelectorVisible = ref(false);
 
 const toggleCurrencySelector = () => {
   isCurrencySelectorVisible.value = !isCurrencySelectorVisible.value;
+};
+const updateSelectedCurrency = (currency) => {
+  selectedCurrencySymbol.value = currency.symbol;
 };
 </script>
