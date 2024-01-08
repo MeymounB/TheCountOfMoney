@@ -1,27 +1,17 @@
 <template>
   <div class="p-4 mx-auto w-full md:w-4/5">
     <div class="text-4xl mb-10 font-semibold">Cryptocurrency News</div>
-    <div class="flex justify-between mb-8 mt-4">
-      <div class="form-control">
+    <div class="w-full rounded-xl">
+      <div class="form-control mb-10">
         <input
           type="text"
-          placeholder="News search"
+          placeholder="Crypto search"
           class="input input-bordered md:w-auto"
+          v-model="searchTerm"
         />
       </div>
-      <div class="join tooltip" data-tip="Show rows">
-        <button
-          class="join-item btn-xs sm:btn btn btn-active sm:btn-active h-12 sm:h-auto"
-        >
-          25
-        </button>
-        <button class="join-item btn-xs sm:btn btn h-12 sm:h-auto">50</button>
-        <button class="join-item btn-xs sm:btn btn h-12 sm:h-auto">100</button>
-      </div>
-    </div>
-    <div class="w-full rounded-xl">
       <div
-        v-for="article in cryptoData"
+        v-for="article in filteredCryptoData"
         :key="article.id"
         class="mx-4 mb-8 bg-base-200 rounded-xl p-4 border border-base-300 shadow flex flex-col md:flex-row"
       >
@@ -56,14 +46,6 @@
         class="mx-4 h-40 w-auto text-5xl font-semibold p-4 my-4 skeleton"
       ></div>
     </div>
-    <div class="flex justify-center mt-4">
-      <div class="join">
-        <button class="join-item btn-sm btn btn-active">1</button>
-        <button class="join-item btn btn-sm">2</button>
-        <button class="join-item btn btn-sm">3</button>
-        <button class="join-item btn btn-sm">4</button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -71,6 +53,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useFetchAPI } from "../composables/fetch.ts";
 const cryptoData = ref([]);
+const searchTerm = ref("");
 
 function convertTimestampToTimeAgo(timestamp) {
   const timeElapsed = Date.now() - new Date(timestamp * 1000);
@@ -99,6 +82,15 @@ const fetchCryptoData = async () => {
     alert("Failed to fetch crypto data");
   }
 };
+
+const filteredCryptoData = computed(() => {
+  if (!searchTerm.value) {
+    return cryptoData.value;
+  }
+  return cryptoData.value.filter((article) =>
+    article.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
+});
 
 onMounted(() => {
   fetchCryptoData();

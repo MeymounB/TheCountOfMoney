@@ -4,13 +4,6 @@
       Today's Cryptocurrency Prices by Market Cap
     </div>
     <div class="flex justify-between mb-8 mt-4">
-      <div class="form-control">
-        <input
-          type="text"
-          placeholder="Crypto search"
-          class="input input-bordered md:w-auto"
-        />
-      </div>
       <div class="join tooltip" data-tip="Show rows">
         <button
           :class="[
