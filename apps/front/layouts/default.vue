@@ -4,6 +4,7 @@
     <main class="main-content">
       <slot />
     </main>
+    <PhoneNavigation />
   </div>
 </template>
 <script lang="ts" setup>
