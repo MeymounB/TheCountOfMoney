@@ -76,10 +76,13 @@
           >Login</NuxtLink
         >
           <NuxtLink
-          v-if="session.isLoggedIn"
-          to="/user"
-          class="btn btn-sm btn-secondary"
-          >{{ session.user?.nickname }}</NuxtLink></div>
+  v-if="session.isLoggedIn"
+  to="/user"
+>
+  <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar bg-base-200">
+        {{ session.user?.firstname[0] }}{{ session.user?.lastname[0] }}
+  </div>
+</NuxtLink></div>
         <Logout class="ml-2" />
     </div>
   </header>
