@@ -51,6 +51,14 @@ iframe {
 }
 
 .custom-ellipsis2 {
+  max-height: 100px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+}
+
+.custom-ellipsis2 {
   max-height: 250px;
   text-overflow: ellipsis;
   display: -webkit-box;

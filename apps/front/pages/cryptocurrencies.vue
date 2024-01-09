@@ -66,6 +66,10 @@
           </div>
         </template>
         <template #price="data">
+           <NuxtLink
+              :to="`/cryptocurrency/${data.data.symbol}/${data.data.id}/`"
+              class="flex items-center gap-2"
+            >
           <span class="font-bold">
             {{
               data.data.price && Object.keys(data.data.price)[0]
@@ -75,8 +79,13 @@
                 : "N/A"
             }}
           </span>
+          </NuxtLink>
         </template>
         <template #last24hCandle="data">
+           <NuxtLink
+              :to="`/cryptocurrency/${data.data.symbol}/${data.data.id}/`"
+              class="flex items-center gap-2"
+            >
           <span
             :class="
               getClass(
@@ -93,8 +102,13 @@
                 : "N/A"
             }}
           </span>
+          </NuxtLink>
         </template>
         <template #hourCandle="data">
+           <NuxtLink
+              :to="`/cryptocurrency/${data.data.symbol}/${data.data.id}/`"
+              class="flex items-center gap-2"
+            >
           <span
             :class="
               getClass(
@@ -110,8 +124,13 @@
                 : "N/A"
             }}
           </span>
+          </NuxtLink>
         </template>
         <template #market_cap="data">
+           <NuxtLink
+              :to="`/cryptocurrency/${data.data.symbol}/${data.data.id}/`"
+              class="flex items-center gap-2"
+            >
           {{
             data.data.price && Object.keys(data.data.price)[0]
               ? formatNumberWithSpaces(
@@ -119,8 +138,13 @@
                 ) + fiatSymbol
               : "N/A"
           }}
+          </NuxtLink>
         </template>
         <template #volume="data">
+           <NuxtLink
+              :to="`/cryptocurrency/${data.data.symbol}/${data.data.id}/`"
+              class="flex items-center gap-2"
+            >
           {{
             data.data.price && Object.keys(data.data.price)[0]
               ? formatNumberWithSpaces(
@@ -128,6 +152,7 @@
                 ) + fiatSymbol
               : "N/A"
           }}
+          </NuxtLink>
         </template>
       </UITable>
     </div>
@@ -143,7 +168,7 @@
 import { ref, onMounted, computed, watch} from "vue";
 import type { UIDataTable } from "@timeismoney/ui-components/types/ui-table";
 import { useFetchAPI } from "../composables/fetch.ts";
-const selectedSortOption = ref('Price Highest to Lowest');
+const selectedSortOption = ref('Market Cap Highest to Lowest');
 const currentPage = ref(1);
 const pageSize = ref(50);
 const totalPages = ref(0);

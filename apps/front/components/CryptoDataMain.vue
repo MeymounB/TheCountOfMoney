@@ -121,7 +121,7 @@
         />
         <div class="flex-grow">
           <div class="text-xs md:text-sm mb-2">
-            {{ convertTimestampToTimeAgo(article.publishedOn) }} ago
+            {{ convertTimestampToTimeAgo(article.publishedOn) }}
           </div>
           <div class="font-bold text-xl md:text-3xl mb-2 custom-title">
             {{ article.title }}

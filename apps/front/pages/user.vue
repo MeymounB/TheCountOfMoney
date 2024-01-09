@@ -110,13 +110,13 @@
         />
         <div class="flex-grow">
           <div class="text-xs md:text-sm mb-2">
-            {{ convertTimestampToTimeAgo(article.publishedOn) }} ago
+            {{ convertTimestampToTimeAgo(article.publishedOn) }}
           </div>
           <div class="font-bold text-xl md:text-3xl mb-2 custom-title">
             {{ article.title }}
           </div>
           <div
-            class="overflow-y-auto max-h-50 custom-ellipsis text-sm md:text-base"
+            class="overflow-y-auto max-h-50 custom-ellipsis2 text-sm md:text-base"
           >
             {{ article.body }}
           </div>
