@@ -145,7 +145,7 @@ import type { UIDataTable } from "@timeismoney/ui-components/types/ui-table";
 import { useFetchAPI } from "../composables/fetch.ts";
 const selectedSortOption = ref('Price Highest to Lowest');
 const currentPage = ref(1);
-const pageSize = ref(10);
+const pageSize = ref(50);
 const totalPages = ref(0);
 const tableLoading = ref(true);
 const fiatSymbol = computed(() => localStorage.getItem('fiatSymbol') || '€');
