@@ -184,7 +184,7 @@ const fetchCryptoData = async () => {
   };
   const response = await useFetchAPI<any[]>(
     "GET",
-    `/cryptos?crudQuery=${JSON.stringify(crudQuery)}`
+    `/cryptos?crudQuery=${JSON.stringify(crudQuery)}&includeFiats=false`
   );
   if (response.ok) {
     totalPages.value = response.data.pageCount;
