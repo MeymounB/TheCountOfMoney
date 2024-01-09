@@ -205,20 +205,36 @@ const fetchCryptoData = async () => {
         });
       switch (selectedSortOption.value) {
         case 'Price Highest to Lowest':
-          combinedData.sort((a, b) => b.price[Object.keys(b.price)[0]].currentPrice - a.price[Object.keys(a.price)[0]].currentPrice);
+          combinedData.sort((a, b) => 
+            a.price && b.price 
+              ? b.price[Object.keys(b.price)[0]].currentPrice - a.price[Object.keys(a.price)[0]].currentPrice
+              : 0
+          );
           break;
         case 'Price Lowest to Highest':
-          combinedData.sort((a, b) => a.price[Object.keys(a.price)[0]].currentPrice - b.price[Object.keys(b.price)[0]].currentPrice);
+          combinedData.sort((a, b) => 
+            a.price && b.price 
+              ? a.price[Object.keys(a.price)[0]].currentPrice - b.price[Object.keys(b.price)[0]].currentPrice
+              : 0
+          );
           break;
         case 'Market Cap Highest to Lowest':
-          combinedData.sort((a, b) => b.price[Object.keys(b.price)[0]].marketCap - a.price[Object.keys(a.price)[0]].marketCap);
+          combinedData.sort((a, b) => 
+            a.price && b.price 
+              ? b.price[Object.keys(b.price)[0]].marketCap - a.price[Object.keys(a.price)[0]].marketCap
+              : 0
+          );
           break;
         case 'Market Cap Lowest to Highest':
-          combinedData.sort((a, b) => a.price[Object.keys(a.price)[0]].marketCap - b.price[Object.keys(b.price)[0]].marketCap);
+          combinedData.sort((a, b) => 
+            a.price && b.price 
+              ? a.price[Object.keys(a.price)[0]].marketCap - b.price[Object.keys(b.price)[0]].marketCap
+              : 0
+          );
           break;
         default:
           break;
-    }
+      }
     
       dataTable.value.data = combinedData;
       tableLoading.value = false;
