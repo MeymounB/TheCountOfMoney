@@ -14,13 +14,13 @@
         votre avenir financier dès aujourd'hui !
       </p>
       <div class="buttons flex flex-row items-center gap-4 lg:gap-8">
-        <button class="btn btn-accent py-2 px-4 rounded-md">
-          Explorer plus
-        </button>
+      <button class="btn btn-accent py-2 px-4 rounded-md" @click="scrollDown">
+        Explorer plus
+      </button>
 
-        <button class="btn btn-secondary py-2 px-4 rounded-md">
+       <NuxtLink to="/cryptocurrencies"> <button class="btn btn-secondary py-2 px-4 rounded-md">
           Commencer
-        </button>
+        </button></NuxtLink>
       </div>
     </div>
     <div class="img-container w-[60%] sm:w-[50%] md:w-[40%] lg:w-auto">
@@ -32,6 +32,15 @@
     </div>
   </section>
 </template>
+<script>
+export default {
+  methods: {
+    scrollDown() {
+      window.scrollTo({ top: window.scrollY + 850, behavior: 'smooth' });
+    },
+  },
+};
+</script>r
 <style scoped>
 @media screen and (max-width: 480px) {
   .img-container {

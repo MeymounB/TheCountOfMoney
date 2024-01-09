@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex gap-20 flex-col py-20 px-6 lg:px-12 bg-secondary text-secondary-content"
+    class="flex gap-20 flex-col py-20 px-6 lg:px-12 bg-base-300 mt-32"
   >
     <div class="text-center">
       <h2 class="text-2xl md:text-2xl lg:text-2xl xl:text-3xl font-bold mb-3">

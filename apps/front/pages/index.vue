@@ -1,10 +1,9 @@
 <template>
   <HomeHeroSection />
-  <HomeStatSection />
   <HomeChartDemoSection />
   <HomeFeaturesDetailSection class="px-6 lg:px-12" />
   <section
-    class="bg-primary text-primary-content flex flex-col items-center justify-center gap-6 md:gap-10 pt-10 px-6 lg:px-12 pb-8 md:pb-16 lg:pb-24 xl:pb-32"
+    class="bg-base-300 flex flex-col items-center justify-center gap-6 md:gap-10 pt-10 px-6 lg:px-12 pb-8 md:pb-16 lg:pb-24 xl:pb-32"
   >
     <div class="mb-2 text-center lg:px-[5%]">
       <h2 class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold mb-5">
@@ -89,7 +88,7 @@
     </div>
   </section>
   <section
-    class="flex flex-col bg-accent text-accent-content px-6 lg:px-12 py-24"
+    class="flex flex-col bg-base-200 px-6 lg:px-12 py-24"
   >
     <hr class="w-full border-t border-solid border-accent-content" />
     <div class="flex flex-col lg:flex-row gap-5">
