@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col mx-auto rounded-lg my-5">
+  <div class="container flex flex-col mx-auto rounded-lg">
     <div
       class="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5"
     >
@@ -7,33 +7,29 @@
         <div class="flex items-center xl:p-10">
           <form
             class="flex flex-col w-full h-full pb-6 bg-base-200 p-10 text-center rounded-3xl"
+            @submit.prevent="signup"
           >
             <h3 class="mb-3 text-4xl font-extrabold text-dark-grey-900">
               Sign Up
             </h3>
-            <p class="mb-4 text-grey-700">Enter an email and password</p>
-            <a
-              class="btn btn-accent flex items-center justify-center w-full mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
+            <label for="email" class="mb-2 text-sm text-start text-grey-900"
+              >NickName*</label
             >
-              <img
-                class="h-5 mr-2"
-                src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
-                alt=""
-              />
-              Sign Up with Google
-            </a>
-            <div class="flex items-center mb-3">
-              <hr class="h-0 border-b border-solid border-grey-500 grow" />
-              <p class="mx-4 text-grey-600">or</p>
-              <hr class="h-0 border-b border-solid border-grey-500 grow" />
-            </div>
+           <input
+              id="nick_name"
+              type="name"
+              placeholder="NickName"
+              v-model="nickName"
+              class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+            />
             <label for="email" class="mb-2 text-sm text-start text-grey-900"
               >First Name*</label
             >
-            <input
+           <input
               id="first_name"
               type="name"
               placeholder="Firstname"
+              v-model="firstName"
               class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
             />
             <label for="email" class="mb-2 text-sm text-start text-grey-900"
@@ -43,6 +39,7 @@
               id="last_name"
               type="name"
               placeholder="Lastname"
+              v-model="lastName"
               class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
             />
             <label for="email" class="mb-2 text-sm text-start text-grey-900"
@@ -52,6 +49,7 @@
               id="email"
               type="email"
               placeholder="name@email.com"
+              v-model="email"
               class="flex items-center w-full px-5 py-4 text-sm font-medium outline-none focus:bg-grey-400 mb-5 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
             />
             <label for="password" class="mb-2 text-sm text-start text-grey-900"
@@ -61,9 +59,11 @@
               id="password"
               type="password"
               placeholder="Enter a password"
+              v-model="password"
               class="flex items-center w-full px-5 py-4 mb-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
             />
             <button
+              type="submit"
               class="btn btn-primary w-full px-6 my-5 text-sm font-bold text-grey-900 md:w-96 rounded-2xl"
             >
               Sign Up
@@ -87,3 +87,38 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { useFetchAPI } from "../composables/fetch.ts";
+
+const nickName = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+
+const signup = async () => {
+  try {
+    const response = await useFetchAPI<any>(
+      "POST",
+      "/auth/register",
+      {
+        nickname: nickName.value,
+        firstname: firstName.value,
+        lastname: lastName.value,
+        email: email.value,
+        password: password.value,
+      }
+    );
+
+    if (!response.ok) {
+      console.log(response);
+      return alert("Registration went wrong!");
+    }
+    return navigateTo("/login");
+  } catch (error) {
+    console.error(error);
+  }
+};
+</script>
