@@ -33,6 +33,13 @@
           50
         </button>
       </div>
+      <select v-model="selectedSortOption" class="select w-auto max-w-xs bg-base-200">
+        <option disabled>Sort by</option>
+        <option>Price Highest to Lowest</option>
+        <option>Price Lowest to Highest</option>
+        <option>Market Cap Highest to Lowest</option>
+        <option>Market Cap Lowest to Highest</option>
+      </select>
     </div>
     <div class="overflow-x-auto border rounded-xl border-base-300">
       <UITable
@@ -133,9 +140,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch} from "vue";
 import type { UIDataTable } from "@timeismoney/ui-components/types/ui-table";
 import { useFetchAPI } from "../composables/fetch.ts";
+const selectedSortOption = ref('Price Highest to Lowest');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const totalPages = ref(0);
@@ -195,6 +203,23 @@ const fetchCryptoData = async () => {
             price: pricesData[crypto.symbol],
           };
         });
+      switch (selectedSortOption.value) {
+        case 'Price Highest to Lowest':
+          combinedData.sort((a, b) => b.price[Object.keys(b.price)[0]].currentPrice - a.price[Object.keys(a.price)[0]].currentPrice);
+          break;
+        case 'Price Lowest to Highest':
+          combinedData.sort((a, b) => a.price[Object.keys(a.price)[0]].currentPrice - b.price[Object.keys(b.price)[0]].currentPrice);
+          break;
+        case 'Market Cap Highest to Lowest':
+          combinedData.sort((a, b) => b.price[Object.keys(b.price)[0]].marketCap - a.price[Object.keys(a.price)[0]].marketCap);
+          break;
+        case 'Market Cap Lowest to Highest':
+          combinedData.sort((a, b) => a.price[Object.keys(a.price)[0]].marketCap - b.price[Object.keys(b.price)[0]].marketCap);
+          break;
+        default:
+          break;
+    }
+    
       dataTable.value.data = combinedData;
       tableLoading.value = false;
     }
@@ -202,7 +227,7 @@ const fetchCryptoData = async () => {
     tableLoading.value = false;
   }
 };
-
+watch(selectedSortOption, fetchCryptoData);
 onMounted(async () => {
   await fetchCryptoData();
 });
