@@ -1,8 +1,16 @@
 export function useGetAllCryptos() {
+  const crudQuery = {
+    pageSize: 10000,
+    page: 1,
+  };
+
   return function () {
     return useFetchAPI<{
       data: { name: string; symbol: string; image_url: string; id: string }[];
-    }>("GET", "cryptos");
+    }>(
+      "GET",
+      `cryptos?crudQuery=${JSON.stringify(crudQuery)}&includeFiats=false`,
+    );
   };
 }
 
