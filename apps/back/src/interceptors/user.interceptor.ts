@@ -50,7 +50,7 @@ export class UsersListInterceptor implements NestInterceptor {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
-          nickname: user.lastname,
+          nickname: user.nickname,
           role: user.role,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
