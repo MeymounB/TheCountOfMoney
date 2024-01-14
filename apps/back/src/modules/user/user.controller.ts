@@ -94,6 +94,13 @@ export class UserController {
     });
   }
 
+  @Patch(':id/pressKeywords')
+async updatePressKeywords(
+  @Param('id', ParseIntPipe) id: number,
+  @Body('pressKeywords') pressKeywords: string[],
+) {
+  return await this.userService.updatePressKeywords(id, pressKeywords);
+}
   @UseInterceptors(UserInterceptor)
   @Post(':id/follow')
   async followCryptos(

@@ -97,9 +97,13 @@
     <div class="text-4xl mt-10 mb-10 font-semibold">
       Your Cryptocurrency News
     </div>
-     <div class="w-full rounded-xl">
+     <div class="w-full rounded-xl mb-72">
+      <div v-if="cryptoNews.length === 0 && !newsLoading" class="text-center text-xl">
+        Add Keywords to see your feed 📪
+      </div>
       <div
-        v-for="article in cryptoNews"
+        v-else
+        v-for="article in matchingKeywords"
         :key="article.id"
         class="mx-4 mb-8 bg-base-200 rounded-xl p-4 border border-base-300 shadow flex flex-col md:flex-row"
       >
@@ -115,6 +119,15 @@
           <div class="font-bold text-xl md:text-3xl mb-2 custom-title">
             {{ article.title }}
           </div>
+          <div class="flex flex-wrap">
+            <div
+            v-for="(keyword, index) in article.matchingKeywords"
+            :key="keyword"
+            :class="index % 2 === 0 ? 'badge badge-secondary ml-1' : 'badge badge-primary ml-1'"
+          >
+            {{ keyword }}
+          </div>
+          </div>
           <div
             class="overflow-y-auto max-h-50 custom-ellipsis2 text-sm md:text-base"
           >
@@ -129,7 +142,7 @@
         </div>
       </div>
       <div
-        v-if="cryptoNews.length == 0"
+        v-if="newsLoading"
         v-for="n in 3"
         class="mx-4 h-40 w-auto text-5xl font-semibold p-4 my-4 skeleton"
       ></div>
@@ -138,17 +151,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watchEffect } from "vue";
 import type { UIDataTable } from "@timeismoney/ui-components/types/ui-table";
 import { useFetchAPI } from "../composables/fetch.ts";
 import { useSessionStore } from "~/stores/session";
 const session = useSessionStore();
 const user = session.user;
 const userId = session.user?.id
+const pressKeywords = computed(() => session.user?.pressKeywords || []);
 const currentPage = ref(1);
 const pageSize = ref(10);
 const totalPages = ref(0);
 const tableLoading = ref(true);
+const newsLoading = ref(true);
 const cryptoNews = ref([]);
 const fiatSymbol = computed(() => localStorage.getItem('fiatSymbol') || '€');
 const dataTable = ref<UIDataTable<any>>({
@@ -235,13 +250,36 @@ const fetchCryptoData = async () => {
 };
 
 const fetchCryptoNews = async () => {
-  const response = await useFetchAPI("GET", `/articles`);
-  if (response.ok) {
-    cryptoNews.value = response.data;
+  newsLoading.value = true;
+  if (pressKeywords.value.length > 0) {
+    const response = await useFetchAPI("GET", `/articles`);
+    if (response.ok) {
+      cryptoNews.value = response.data.filter(article =>
+        pressKeywords.value.some(keyword =>
+          article.title.toLowerCase().includes(keyword.toLowerCase())
+        )
+      );
+      newsLoading.value = false;
+    } else {
+      alert("Failed to fetch crypto data");
+      newsLoading.value = true;
+    }
   } else {
-    alert("Failed to fetch crypto data");
+    newsLoading.value = false;
+    cryptoNews.value = [];
   }
 };
+
+const matchingKeywords = computed(() => {
+  return cryptoNews.value.map(article => {
+    return {
+      ...article,
+      matchingKeywords: pressKeywords.value.filter(keyword =>
+        article.title.toLowerCase().includes(keyword.toLowerCase())
+      )
+    };
+  });
+});
 
 onMounted(async () => {
   await fetchCryptoData();

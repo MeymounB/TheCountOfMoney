@@ -142,4 +142,10 @@ export class UserService extends PrismaCrudService {
   async followedCryptos(userId: number): Promise<Currency[]> {
     return this.getFollowedCurrencies(userId);
   }
+  async updatePressKeywords(id: number, pressKeywords: string[]): Promise<User | null> {
+    return this.prisma.user.update({
+      where: { id },
+      data: { pressKeywords },
+    });
+  }
 }
